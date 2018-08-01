@@ -23,11 +23,27 @@ A list of available routes follows, with examples using `curl`.
 	{"b":"0x010644e7fe131b029b85045b48181885d978163916871cffd3c208c16d87cfd3","v":"0x0ade","h":{"x":"0x0d4826f08fe82224dfebd536358a1c0b3cd499b8dabec6e49abc37e78be1037a","y":"0x19e129957f1b471f2bb563bb32b3836412adbcc943362c896c143a47438aa518"},"g":{"x":"0x0000000000000000000000000000000000000000000000000000000000000001","y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"}}
 	```
 * Output: JSON object containing the result in hex:  
-	`{"curvepoint":{"x":"0x086298450940b58d7f132a1765439e28658128fadcd790016466b3e67d4e2350","y":"0x00188d6bbfd592a7ef9e133fc1324c4f7a2eb89ccd6f70a4d1ccd304cbade81c"}}`
+	```
+  {"curvepoint":{"x":"0x086298450940b58d7f132a1765439e28658128fadcd790016466b3e67d4e2350","y":"0x00188d6bbfd592a7ef9e133fc1324c4f7a2eb89ccd6f70a4d1ccd304cbade81c"}}
+  ```
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"b":"0x010644e7fe131b029b85045b48181885d978163916871cffd3c208c16d87cfd3","v":"0x0ade","h":{"x":"0x0d4826f08fe82224dfebd536358a1c0b3cd499b8dabec6e49abc37e78be1037a","y":"0x19e129957f1b471f2bb563bb32b3836412adbcc943362c896c143a47438aa518"},"g":{"x":"0x0000000000000000000000000000000000000000000000000000000000000001","y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"}}' http://localhost:8083/generate/commitment/
 	```
+ 
+#### `/generate/keccak256/`
+* Description: Generate hash of input text: `result = Hash(text)`  
+* Method: `POST`  
+*	Input: JSON object containing an input string to the hash function: For ex. `{"t":"Input to hash function"}`
+* Output: JSON object containing the resulting hash in hex: For ex. 
+	```
+	{"number":{"v":"0xce567e7482a2e206d4337ff13f5c0b8e13bb5467844e2209d87e9f1484477799"}}
+	```
+* Example usage: 
+	```
+	curl --header "Content-Type: application/json" --request POST --data '{"t":"Input to hash function"}' http://localhost:8083/ec/hashtopoint/
+	```
+
 
 #### `/generate/schnorr/`
 TODO
