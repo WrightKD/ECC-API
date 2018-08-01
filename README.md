@@ -9,7 +9,7 @@ A lightweight API with endpoints for doing operations using the bn256 elliptic c
 
 ## Running and testing
 1. Start the API server by browsing to `$GOPATH/src/github.com/rynobey/ECC-API` and running `./ECC-API`. The server runs on port 8083.
-2. Once the API server is started, test it by running `go test -v .` (while in `$GOPATH/src/github.com/rynobey/ECC-API`)
+2. Once the API server is started, test it by running `GOCACHE=off go test -v .` (while in `$GOPATH/src/github.com/rynobey/ECC-API`)
 
 ## Routes
 A list of available routes follows, with examples using `curl`.
