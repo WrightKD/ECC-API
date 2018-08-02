@@ -7,6 +7,7 @@ import (
 )
 
 type Response struct {
+  Text  string          `json:"text,omitempty"`
   Num   *Number         `json:"number,omitempty"`
   P     *CurvePoint     `json:"curvepoint,omitempty"`
   Err   *Error          `json:"error,omitempty"`
