@@ -4,7 +4,7 @@ A lightweight API with endpoints for doing operations using the bn256 elliptic c
 ## Installation
 1. Install go 1.10+.
 2. Make sure your `GOPATH` environment variable is pointing to an appropriate location
-3. Get the repo along with its dependencies: `go get -d -u github.com/rynobey/ECC-API.git`
+3. Get the repo along with its dependencies: `go get -d -u github.com/rynobey/ECC-API`
 4. Compile by browsing to `$GOPATH/src/github.com/rynobey/ECC-API` and running `go build`
 
 ## Running and testing
