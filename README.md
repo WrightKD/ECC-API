@@ -44,7 +44,6 @@ A list of available routes follows, with examples using `curl`.
 	curl --header "Content-Type: application/json" --request POST --data '{"t":"Input to hash function"}' http://localhost:8083/generate/keccak256/
 	```
 
-
 #### `/generate/schnorr/`
 TODO
 
@@ -175,4 +174,14 @@ TODO
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x07", "b":"0x05"}' http://localhost:8083/big/mod/
+	```
+
+#### `/big/invmod/`  
+* Description: Modular multiplicative inverse of a big integer: `(result * a) mod b = 1`  
+* Method: `POST`  
+* Input: JSON object containing two numbers, a and b in hex: `{"a":"0x07", "b":"0x05"}`  
+* Output: JSON object containing the result in hex: `{"number":{"v":"0x3"}}`  
+* Example usage: 
+	```
+	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x07", "b":"0x05"}' http://localhost:8083/big/invmod/
 	```
