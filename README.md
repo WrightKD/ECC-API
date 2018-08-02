@@ -164,7 +164,7 @@ TODO
 * Output: JSON object containing the result in hex: `{"number":{"v":"0xadef342"}}`  
 * Example usage: 
 	```
-	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x01", "b":"0x0adef342", "c":"0xffffffff"}' http://localhost:8083/big/mul/
+	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x01", "b":"0x0adef342"}' http://localhost:8083/big/mul/
 	```
 
 #### `/big/mod/`  
@@ -174,5 +174,5 @@ TODO
 * Output: JSON object containing the result in hex: `{"number":{"v":"0x2"}}`  
 * Example usage: 
 	```
-	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x07", "b":"0x05", "c":"0xffffffff"}' http://localhost:8083/big/mod/
+	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x07", "b":"0x05"}' http://localhost:8083/big/mod/
 	```
