@@ -1,6 +1,7 @@
 package main
 
 import (
+  "fmt"
   "log"
   "net/http"
   "encoding/json"
@@ -25,6 +26,7 @@ func main() {
   router.HandleFunc("/ec/mul/", ECMul).Methods("POST")
   router.HandleFunc("/ec/basemul/", ECBaseMul).Methods("POST")
   router.HandleFunc("/ec/hashtopoint/", ECHashToPoint).Methods("POST")
+  fmt.Printf("Listening on port %s\n", port)
   log.Fatal(http.ListenAndServe(":"+port, router))
 }
 
