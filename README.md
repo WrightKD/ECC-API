@@ -35,13 +35,13 @@ A list of available routes follows, with examples using `curl`.
 	```
 * Output: JSON object containing the result in hex:  
 	```json
-  {
-    "curvepoint":{
-      "x":"0x086298450940b58d7f132a1765439e28658128fadcd790016466b3e67d4e2350",
-      "y":"0x00188d6bbfd592a7ef9e133fc1324c4f7a2eb89ccd6f70a4d1ccd304cbade81c"
-    }
-  }
-  ```
+	{
+	  "curvepoint":{
+	    "x":"0x086298450940b58d7f132a1765439e28658128fadcd790016466b3e67d4e2350",
+	    "y":"0x00188d6bbfd592a7ef9e133fc1324c4f7a2eb89ccd6f70a4d1ccd304cbade81c"
+	  }
+	}
+	```
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"b":"0x010644e7fe131b029b85045b48181885d978163916871cffd3c208c16d87cfd3","v":"0x0ade","h":{"x":"0x0d4826f08fe82224dfebd536358a1c0b3cd499b8dabec6e49abc37e78be1037a","y":"0x19e129957f1b471f2bb563bb32b3836412adbcc943362c896c143a47438aa518"},"g":{"x":"0x0000000000000000000000000000000000000000000000000000000000000001","y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"}}' http://localhost:8083/generate/commitment/
