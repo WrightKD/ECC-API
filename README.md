@@ -34,11 +34,11 @@ A list of available routes follows, with examples using `curl`.
 	}
 	```
 * Output: JSON object containing the result in hex:  
-	```
+	```jason
   {
     "curvepoint":{
-    "x":"0x086298450940b58d7f132a1765439e28658128fadcd790016466b3e67d4e2350",
-    "y":"0x00188d6bbfd592a7ef9e133fc1324c4f7a2eb89ccd6f70a4d1ccd304cbade81c"
+      "x":"0x086298450940b58d7f132a1765439e28658128fadcd790016466b3e67d4e2350",
+      "y":"0x00188d6bbfd592a7ef9e133fc1324c4f7a2eb89ccd6f70a4d1ccd304cbade81c"
     }
   }
   ```
