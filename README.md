@@ -41,7 +41,7 @@ A list of available routes follows, with examples using `curl`.
 	```
 * Example usage: 
 	```
-	curl --header "Content-Type: application/json" --request POST --data '{"t":"Input to hash function"}' http://localhost:8083/ec/hashtopoint/
+	curl --header "Content-Type: application/json" --request POST --data '{"t":"Input to hash function"}' http://localhost:8083/generate/keccak256/
 	```
 
 
