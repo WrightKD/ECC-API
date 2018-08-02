@@ -12,7 +12,22 @@ A lightweight API with endpoints for doing operations using the bn256 elliptic c
 2. Once the API server is started, test it by running `GOCACHE=off go test -v .` (while in `$GOPATH/src/github.com/rynobey/ECC-API`)
 
 ## Routes
-A list of available routes follows, with examples using `curl`.
+These are the available routes:
+* [`/isalive`](#isalive)
+* [`/generate/commitment/`](#generatecommitment)
+* [`/generate/keccak256/`](#generatekeccak256)
+* [`/generate/schnorr/`](#generateschnorr)
+* [`/verify/schnorr/`](#verifyschnorr)
+* [`/ec/order`](#ecorder)
+* [`/ec/add/`](#ecadd)
+* [`/ec/sub/`](#ecsub)
+* [`/ec/basemul/`](#ecbasemul)
+* [`/ec/hashtopoint/`](#echashtopoint)
+* [`/big/add/`](#bigadd)
+* [`/big/submod/`](#bigsubmod)
+* [`/big/mul/`](#bigmul)
+* [`/big/mod/`](#bigmod)
+* [`/big/invmod/`](#biginvmod)
 
 ### Test routes
 #### `/isalive`
