@@ -13,7 +13,7 @@ import (
   "fmt"
 )
 
-func TestGetECOrder(t *testing.T) {
+func TestECOrder(t *testing.T) {
   q, _ := new(big.Int).SetString("21888242871839275222246405745257275088548364400416034343698204186575808495617", 10)
   response, err := http.Get("http://localhost:" + port + "/ec/order")
   if err != nil {
@@ -42,7 +42,7 @@ func TestGetECOrder(t *testing.T) {
   }
 }
 
-func TestECAddGivesCorrectResult(t *testing.T) {
+func TestECAdd(t *testing.T) {
   A := new(bn256.G1).ScalarBaseMult(new(big.Int).SetInt64(10))
   marshalledBytesA := A.Marshal()
   B := new(bn256.G1).ScalarBaseMult(new(big.Int).SetInt64(100))
@@ -91,7 +91,7 @@ func TestECAddGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestECSubGivesCorrectResult(t *testing.T) {
+func TestECSub(t *testing.T) {
   A := new(bn256.G1).ScalarBaseMult(new(big.Int).SetInt64(10))
   marshalledBytesA := A.Marshal()
   B := new(bn256.G1).ScalarBaseMult(new(big.Int).SetInt64(100))
@@ -140,7 +140,7 @@ func TestECSubGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestECMulGivesCorrectResult(t *testing.T) {
+func TestECMul(t *testing.T) {
   s := new(big.Int).SetInt64(100)
   A := new(bn256.G1).ScalarBaseMult(new(big.Int).SetInt64(10))
   marshalledBytesA := A.Marshal()
@@ -188,7 +188,7 @@ func TestECMulGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestECBaseMulGivesCorrectResult(t *testing.T) {
+func TestECBaseMul(t *testing.T) {
   s := new(big.Int).SetInt64(100)
   s_val := NewNumber(s)
   marshalledJSON, _ := json.Marshal(s_val)
@@ -279,7 +279,7 @@ func TestECHashToPoint(t *testing.T) {
   }
 }
 
-func TestGeneratesValidCommitment(t *testing.T) {
+func TestGenerateCommitment(t *testing.T) {
   var testBlind = int64(4563452349857)
   b := new(big.Int).SetInt64(testBlind)
   var testValue = int64(123445)
@@ -334,7 +334,7 @@ func TestGeneratesValidCommitment(t *testing.T) {
   }
 }
 
-func TestAddGivesCorrectResult(t *testing.T) {
+func TestBigAdd(t *testing.T) {
   a, _ := new(big.Int).SetString("20222222222222222222222222222222222222222222222222222222222222222222222222222", 10)
   b, _ := new(big.Int).SetString("11111111111111111111111111111111111111111111111111111111111111111111111111111", 10)
   binaryOpParams := BinaryOpParams{A: fmt.Sprintf("0x%x", a), B: fmt.Sprintf("0x%x", b)}
@@ -369,7 +369,7 @@ func TestAddGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestSubModGivesCorrectResult(t *testing.T) {
+func TestBigSubMod(t *testing.T) {
   a, _ := new(big.Int).SetString("20222222222222222222222222222222222222222222222222222222222222222222222222222", 10)
   b, _ := new(big.Int).SetString("11111111111111111111111111111111111111111111111111111111111111111111111111111", 10)
   c, _ := new(big.Int).SetString("21888242871839275222246405745257275088548364400416034343698204186575808495617", 10)
@@ -406,7 +406,7 @@ func TestSubModGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestMulGivesCorrectResult(t *testing.T) {
+func TestBigMul(t *testing.T) {
   a, _ := new(big.Int).SetString("20222222222222222222222222222222222222222222222222222222222222222222222222222", 10)
   b, _ := new(big.Int).SetString("11111111111111111111111111111111111111111111111111111111111111111111111111111", 10)
   binaryOpParams := BinaryOpParams{A: fmt.Sprintf("0x%x", a), B: fmt.Sprintf("0x%x", b)}
@@ -441,7 +441,7 @@ func TestMulGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestModGivesCorrectResult(t *testing.T) {
+func TestBigMod(t *testing.T) {
   a, _ := new(big.Int).SetString("50222222222222222222222222222222222222222222222222222222222222222222222222222", 10)
   b, _ := new(big.Int).SetString("21888242871839275222246405745257275088548364400416034343698204186575808495617", 10)
   binaryOpParams := BinaryOpParams{A: fmt.Sprintf("0x%x", a), B: fmt.Sprintf("0x%x", b)}
@@ -476,7 +476,7 @@ func TestModGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestInvModGivesCorrectResult(t *testing.T) {
+func TestInvMod(t *testing.T) {
   a, _ := new(big.Int).SetString("20222222222222222222222222222222222222222222222222222222222222222222222222222", 10)
   b, _ := new(big.Int).SetString("11111111111111111111111111111111111111111111111111111111111111111111111111111", 10)
   binaryOpParams := BinaryOpParams{A: fmt.Sprintf("0x%x", a), B: fmt.Sprintf("0x%x", b)}
@@ -544,5 +544,29 @@ func TestGenerateKeccak256(t *testing.T) {
   ans, _ := new(big.Int).SetString(fmt.Sprintf("%x", h.Sum(nil)), 16)
   if (ans.String() != ansAPI.String()) {
     t.Errorf("Incorrect answer returned\n")
+  }
+}
+
+func TestIsAlive(t *testing.T) {
+  response, err := http.Get("http://localhost:" + port + "/isalive")
+  if err != nil {
+    t.Errorf("An error occurred while making request to API: %s\n", err)
+    return
+  }
+  defer response.Body.Close()
+  contents, err := ioutil.ReadAll(response.Body)
+  if err != nil {
+    t.Errorf("An error occurred while reading response body: %s\n", err)
+    return
+  }
+  var res Response
+  err = json.Unmarshal(contents, &res)
+  if err != nil {
+    t.Errorf("An error occurred while reading into JSON object: %s\n", err)
+    return
+  }
+  s := res.Text
+  if (s != "It's alive!") {
+    t.Errorf("Invalid value returned\n")
   }
 }
