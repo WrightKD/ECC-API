@@ -15,6 +15,10 @@ func ECAdd(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var binaryEcOpParams BinaryEcOpParams
   err := ReadContentsIntoStruct(r, &binaryEcOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   A, err := NewECPoint(binaryEcOpParams.A.X, binaryEcOpParams.A.Y, err)
   B, err := NewECPoint(binaryEcOpParams.B.X, binaryEcOpParams.B.Y, err)
   if err != nil {
@@ -30,6 +34,10 @@ func ECSub(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var binaryEcOpParams BinaryEcOpParams
   err := ReadContentsIntoStruct(r, &binaryEcOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   A, err := NewECPoint(binaryEcOpParams.A.X, binaryEcOpParams.A.Y, err)
   B, err := NewECPoint(binaryEcOpParams.B.X, binaryEcOpParams.B.Y, err)
   if err != nil {
@@ -45,6 +53,10 @@ func ECMul(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var scalarEcOpParams ScalarEcOpParams
   err := ReadContentsIntoStruct(r, &scalarEcOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   s, err := NewBigInt(scalarEcOpParams.S.V, err)
   A, err := NewECPoint(scalarEcOpParams.A.X, scalarEcOpParams.A.Y, err)
   if err != nil {
@@ -60,6 +72,10 @@ func ECBaseMul(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var number Number
   err := ReadContentsIntoStruct(r, &number)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   s, err := NewBigInt(number.V, err)
   if err != nil {
     encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
@@ -74,6 +90,10 @@ func ECHashToPoint(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var text Text
   err := ReadContentsIntoStruct(r, &text)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   A := new(bn256.G1).Hash(text.T)
   if err != nil {
     encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
