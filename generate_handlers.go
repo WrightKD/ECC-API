@@ -13,6 +13,10 @@ func GenerateKeccak256(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var text Text
   err := ReadContentsIntoStruct(r, &text)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   h := sha3.NewKeccak256()
   h.Reset()
   h.Write([]byte(text.T))
@@ -28,6 +32,10 @@ func GenerateCommitment(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var commitmentInputs CommitmentInputs
   err := ReadContentsIntoStruct(r, &commitmentInputs)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   b, err := NewBigInt(commitmentInputs.B, err)
   v, err := NewBigInt(commitmentInputs.V, err)
   H, err := NewECPoint(commitmentInputs.H.X, commitmentInputs.H.Y, err)

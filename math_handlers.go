@@ -18,6 +18,10 @@ func BigIntAdd(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var binaryOpParams BinaryOpParams
   err := ReadContentsIntoStruct(r, &binaryOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   a, err := NewBigInt(binaryOpParams.A, err)
   b, err := NewBigInt(binaryOpParams.B, err)
   if err != nil {
@@ -32,6 +36,10 @@ func BigIntSubMod(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var ternaryOpParams TernaryOpParams
   err := ReadContentsIntoStruct(r, &ternaryOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   a, err := NewBigInt(ternaryOpParams.A, err)
   b, err := NewBigInt(ternaryOpParams.B, err)
   c, err := NewBigInt(ternaryOpParams.C, err)
@@ -48,6 +56,10 @@ func BigIntInvMod(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var binaryOpParams BinaryOpParams
   err := ReadContentsIntoStruct(r, &binaryOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   a, err := NewBigInt(binaryOpParams.A, err)
   b, err := NewBigInt(binaryOpParams.B, err)
   if err != nil {
@@ -62,6 +74,10 @@ func BigIntMul(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var binaryOpParams BinaryOpParams
   err := ReadContentsIntoStruct(r, &binaryOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   a, err := NewBigInt(binaryOpParams.A, err)
   b, err := NewBigInt(binaryOpParams.B, err)
   if err != nil {
@@ -76,6 +92,10 @@ func BigIntMod(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var binaryOpParams BinaryOpParams
   err := ReadContentsIntoStruct(r, &binaryOpParams)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
   a, err := NewBigInt(binaryOpParams.A, err)
   b, err := NewBigInt(binaryOpParams.B, err)
   if err != nil {
