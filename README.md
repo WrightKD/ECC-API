@@ -34,7 +34,7 @@ A list of available routes follows, with examples using `curl`.
 	}
 	```
 * Output: JSON object containing the result in hex:  
-	```jason
+	```json
   {
     "curvepoint":{
       "x":"0x086298450940b58d7f132a1765439e28658128fadcd790016466b3e67d4e2350",
