@@ -111,9 +111,9 @@ TODO
 	```
 
 #### `/ec/basemul/`  
-* Description: Multiplication of the base generator (g) elliptic curve point by a scalar: `result = s * g`  
+* Description: Multiplication of the base generator (g) elliptic curve point by a scalar: `result = v * g`  
 * Method: `POST`  
-*	Input: JSON object containing one integer s in hex: For ex. `{"v":"0x02"}`
+*	Input: JSON object containing one integer v in hex: For ex. `{"v":"0x02"}`
 * Output: JSON object containing the resulting curve point in hex: For ex. 
 	```
 	{"curvepoint":{"x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3","y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"}}
