@@ -14,6 +14,7 @@ func main() {
   router.HandleFunc("/generate/keccak256/", GenerateKeccak256).Methods("POST")
   router.HandleFunc("/big/add/", BigIntAdd).Methods("POST")
   router.HandleFunc("/big/submod/", BigIntSubMod).Methods("POST")
+  router.HandleFunc("/big/invmod/", BigIntInvMod).Methods("POST")
   router.HandleFunc("/big/mul/", BigIntMul).Methods("POST")
   router.HandleFunc("/big/mod/", BigIntMod).Methods("POST")
   router.HandleFunc("/ec/order", ECOrder)

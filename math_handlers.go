@@ -44,6 +44,20 @@ func BigIntSubMod(w http.ResponseWriter, r *http.Request) {
   encoder.Encode(Response{Num: NewNumber(ans)})
 }
 
+func BigIntInvMod(w http.ResponseWriter, r *http.Request) {
+  encoder := json.NewEncoder(w)
+  var binaryOpParams BinaryOpParams
+  err := ReadContentsIntoStruct(r, &binaryOpParams)
+  a, err := NewBigInt(binaryOpParams.A, err)
+  b, err := NewBigInt(binaryOpParams.B, err)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
+  ans := new(big.Int).ModInverse(a, b)
+  encoder.Encode(Response{Num: NewNumber(ans)})
+}
+
 func BigIntMul(w http.ResponseWriter, r *http.Request) {
   encoder := json.NewEncoder(w)
   var binaryOpParams BinaryOpParams
