@@ -18,7 +18,7 @@ A list of available routes follows, with examples using `curl`.
 #### `/generate/commitment`
 * Description: Generate Pedersen commitment: `result = v * g + b * h`, where `g` and `h` are ec curve points, `v` is the value being comitted to and `b` is the blinding factor    
 * Method: `POST`  
-*	Input: JSON object containing two integers, b and v, and two curve points, h and g, in hex: For ex. 
+* Input: JSON object containing two integers, b and v, and two curve points, h and g, in hex: For ex. 
 	```json
 	{
 	  "b":"0x010644e7fe131b029b85045b48181885d978163916871cffd3c208c16d87cfd3",
@@ -33,7 +33,7 @@ A list of available routes follows, with examples using `curl`.
 	  }
 	}
 	```
-* Output: JSON object containing the result in hex:  
+* Output: JSON object containing the result in hex: 
 	```json
 	{
 	  "curvepoint":{
@@ -52,8 +52,12 @@ A list of available routes follows, with examples using `curl`.
 * Method: `POST`  
 *	Input: JSON object containing an input string to the hash function: For ex. `{"t":"Input to hash function"}`
 * Output: JSON object containing the resulting hash in hex: For ex. 
-	```
-	{"number":{"v":"0xce567e7482a2e206d4337ff13f5c0b8e13bb5467844e2209d87e9f1484477799"}}
+	```json
+	{
+	  "number":{
+	    "v":"0xce567e7482a2e206d4337ff13f5c0b8e13bb5467844e2209d87e9f1484477799"
+	  }
+	}
 	```
 * Example usage: 
 	```
@@ -71,7 +75,13 @@ TODO
 * Description: Returns bn256 EC order q: `result = q`  
 * Method: `GET`  
 * Output: JSON object containing the result in hex:  
-	`{"number":{"v":"0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000001"}}`
+	```json
+	{
+	  "number":{
+	    "v":"0x30644e72e131a029b85045b68181585d2833e84879b9709143e1f593f0000001"
+	  }
+	}
+	```
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request GET http://localhost:8083/ec/order
@@ -81,12 +91,26 @@ TODO
 * Description: Addition of two elliptic curve points: `result = a + b`  
 * Method: `POST`  
 *	Input: JSON object containing two curve points, a and b in hex: For ex. 
-	```
-	{"a":{"x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3","y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"},"b":{"x":"0x0000000000000000000000000000000000000000000000000000000000000001","y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"}}
+	```json
+	{
+	  "a":{
+	    "x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3",
+	    "y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"
+	  },
+	  "b":{
+	    "x":"0x0000000000000000000000000000000000000000000000000000000000000001",
+	    "y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"
+	  }
+	}
 	```
 * Output: JSON object containing the resulting curve point in hex: For ex. 
-	```
-	{"curvepoint":{"x":"0x0769bf9ac56bea3ff40232bcb1b6bd159315d84715b8e679f2d355961915abf0","y":"0x05acb4b400e90c0063006a39f478f3e865e306dd5cd56f356e2e8cd8fe7edae6"}}
+	```json
+	{
+	  "curvepoint":{
+	    "x":"0x0769bf9ac56bea3ff40232bcb1b6bd159315d84715b8e679f2d355961915abf0",
+	    "y":"0x05acb4b400e90c0063006a39f478f3e865e306dd5cd56f356e2e8cd8fe7edae6"
+	  }
+	}
 	```
 * Example usage: 
 	```
@@ -97,12 +121,26 @@ TODO
 * Description: Subtraction of one elliptic curve point from another: `result = a - b`  
 * Method: `POST`  
 *	Input: JSON object containing two curve points, a and b in hex: For ex. 
-	```
-	{"a":{"x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3","y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"},"b":{"x":"0x0000000000000000000000000000000000000000000000000000000000000001","y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"}}
+	```json
+	{
+	  "a":{
+	    "x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3",
+	    "y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"
+	  },
+	  "b":{
+	    "x":"0x0000000000000000000000000000000000000000000000000000000000000001",
+	    "y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"
+	  }
+	}
 	```
 * Output: JSON object containing the resulting curve point in hex: For ex. 
-	```
-	{"curvepoint":{"x":"0x0000000000000000000000000000000000000000000000000000000000000001","y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"}}
+	```json
+	{
+	  "curvepoint":{
+	    "x":"0x0000000000000000000000000000000000000000000000000000000000000001",
+	    "y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"
+	  }
+	}
 	```
 * Example usage: 
 	```
@@ -113,12 +151,25 @@ TODO
 * Description: Multiplication of an elliptic curve point by a scalar: `result = s * a`  
 * Method: `POST`  
 *	Input: JSON object containing one integer, s, and one curve point, a, in hex: For ex. 
-	```
-	{"s":{"v":"0x01"},"a":{"x":"0x0000000000000000000000000000000000000000000000000000000000000001","y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"}}
+	```json
+	{
+	  "s":{
+	    "v":"0x01"
+	  },
+	  "a":{
+	    "x":"0x0000000000000000000000000000000000000000000000000000000000000001",
+	    "y":"0x30644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd45"
+	  }
+	}
 	```
 * Output: JSON object containing the resulting curve point in hex: For ex. 
-	```
-	{"curvepoint":{"x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3","y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"}}
+	```json
+	{
+	  "curvepoint":{
+	    "x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3",
+	    "y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"
+	  }
+	}
 	```
 * Example usage: 
 	```
@@ -128,10 +179,20 @@ TODO
 #### `/ec/basemul/`  
 * Description: Multiplication of the base generator (g) elliptic curve point by a scalar: `result = v * g`  
 * Method: `POST`  
-*	Input: JSON object containing one integer v in hex: For ex. `{"v":"0x02"}`
-* Output: JSON object containing the resulting curve point in hex: For ex. 
+*	Input: JSON object containing one integer v in hex: For ex. 
+	```json
+	{
+	  "v":"0x02"
+	}
 	```
-	{"curvepoint":{"x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3","y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"}}
+* Output: JSON object containing the resulting curve point in hex: For ex. 
+	```json
+	{
+	  "curvepoint":{
+	    "x":"0x030644e72e131a029b85045b68181585d97816a916871ca8d3c208c16d87cfd3",
+	    "y":"0x1a76dae6d3272396d0cbe61fced2bc532edac647851e3ac53ce1cc9c7e645a83"
+	  }
+	}
 	```
 * Example usage: 
 	```
@@ -141,10 +202,20 @@ TODO
 #### `/ec/hashtopoint/`  
 * Description: Hash to a point on the elliptic curve (with unknown private key): `result = HashToPoint(text)`  
 * Method: `POST`  
-*	Input: JSON object containing an input string to the hash function: For ex. `{"t":"Input to hash function"}`
-* Output: JSON object containing the resulting curve point in hex: For ex. 
+*	Input: JSON object containing an input string to the hash function: For ex. 
+	```json
+	{
+	  "t":"Input to hash function"
+	}
 	```
-	{"curvepoint":{"x":"0x0d4826f08fe82224dfebd536358a1c0b3cd499b8dabec6e49abc37e78be1037a","y":"0x19e129957f1b471f2bb563bb32b3836412adbcc943362c896c143a47438aa518"}}
+* Output: JSON object containing the resulting curve point in hex: For ex. 
+	```json
+	{
+	  "curvepoint":{
+	    "x":"0x0d4826f08fe82224dfebd536358a1c0b3cd499b8dabec6e49abc37e78be1037a",
+	    "y":"0x19e129957f1b471f2bb563bb32b3836412adbcc943362c896c143a47438aa518"
+	  }
+	}
 	```
 * Example usage: 
 	```
@@ -155,8 +226,21 @@ TODO
 #### `/big/add/`  
 * Description: Addition of two big integers: `result = a + b`  
 * Method: `POST`  
-* Input: JSON object containing two numbers, a and b in hex: For ex. `{"a":"0x01", "b":"0x0adef342"}`  
-* Output: JSON object containing the result in hex: For ex. `{"number":{"v":"0xadef343"}}`  
+* Input: JSON object containing two numbers, a and b in hex: For ex. 
+	```json
+	{
+	  "a":"0x01", 
+	  "b":"0x0adef342"
+	}
+	```  
+* Output: JSON object containing the result in hex: For ex. 
+	```json
+	{
+	  "number":{
+	    "v":"0xadef343"
+	  }
+	}
+	```
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x01", "b":"0x0adef342"}' http://localhost:8083/big/add/
@@ -165,8 +249,22 @@ TODO
 #### `/big/submod/`  
 * Description: Modular subtraction of one big integer from another: `result = (a - b) mod c`  
 * Method: `POST`  
-* Input: JSON object containing three numbers, a, b and c in hex: `{"a":"0x01", "b":"0x0adef342", "c":"0xffffffff}`  
-* Output: JSON object containing the result in hex: `{"number":{"v":"0xf5210cbe"}}`  
+* Input: JSON object containing three numbers, a, b and c in hex: 
+	```json
+	{
+	  "a":"0x01", 
+	  "b":"0x0adef342", 
+	  "c":"0xffffffff
+	}
+	```  
+* Output: JSON object containing the result in hex: 
+	```json
+	{
+	  "number":{
+	    "v":"0xf5210cbe"
+	  }
+	}
+	```  
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x01", "b":"0x0adef342", "c":"0xffffffff"}' http://localhost:8083/big/submod/  
@@ -175,8 +273,21 @@ TODO
 #### `/big/mul/`  
 * Description: Multiplication of two big integers: `result = a * b`  
 * Method: `POST`  
-* Input: JSON object containing two numbers, a and b in hex: `{"a":"0x01", "b":"0x0adef342"}`  
-* Output: JSON object containing the result in hex: `{"number":{"v":"0xadef342"}}`  
+* Input: JSON object containing two numbers, a and b in hex: 
+	```json
+	{
+	  "a":"0x01", 
+	  "b":"0x0adef342"
+	}
+	```  
+* Output: JSON object containing the result in hex: 
+	```json
+	{
+	  "number":{
+	    "v":"0xadef342"
+	  }
+	}
+	```
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x01", "b":"0x0adef342"}' http://localhost:8083/big/mul/
@@ -185,8 +296,21 @@ TODO
 #### `/big/mod/`  
 * Description: Mod of a big integer: `result = a mod b`  
 * Method: `POST`  
-* Input: JSON object containing two numbers, a and b in hex: `{"a":"0x07", "b":"0x05"}`  
-* Output: JSON object containing the result in hex: `{"number":{"v":"0x2"}}`  
+* Input: JSON object containing two numbers, a and b in hex: 
+	```json
+	{
+	  "a":"0x07", 
+	  "b":"0x05"
+	}
+	```  
+* Output: JSON object containing the result in hex: 
+	```json
+	{
+	  "number":{
+	    "v":"0x2"
+	  }
+	}
+	```
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x07", "b":"0x05"}' http://localhost:8083/big/mod/
@@ -195,8 +319,21 @@ TODO
 #### `/big/invmod/`  
 * Description: Modular multiplicative inverse of a big integer: `(result * a) mod b = 1`  
 * Method: `POST`  
-* Input: JSON object containing two numbers, a and b in hex: `{"a":"0x07", "b":"0x05"}`  
-* Output: JSON object containing the result in hex: `{"number":{"v":"0x3"}}`  
+* Input: JSON object containing two numbers, a and b in hex: 
+	```json
+	{
+	  "a":"0x07", 
+	  "b":"0x05"
+	}
+	```  
+* Output: JSON object containing the result in hex: 
+	```json
+	{
+	  "number":{
+	    "v":"0x3"
+	  }
+	}
+	```
 * Example usage: 
 	```
 	curl --header "Content-Type: application/json" --request POST --data '{"a":"0x07", "b":"0x05"}' http://localhost:8083/big/invmod/
