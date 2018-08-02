@@ -14,7 +14,23 @@ A lightweight API with endpoints for doing operations using the bn256 elliptic c
 ## Routes
 A list of available routes follows, with examples using `curl`.
 
-### Routes implementing cryptographic algorithms
+### Test routes
+#### `/isalive`
+* Description: Returns a string saying that the API is alive   
+* Method: `GET` 
+* Output: JSON object containing a string:  
+	```json
+	{
+	  "text":"It's alive!"
+	}
+	```
+* Example usage: 
+	```
+	curl --header "Content-Type: application/json" --request GET http://localhost:8083/isalive
+	```
+
+
+### Routes for cryptographic algorithms
 #### `/generate/commitment`
 * Description: Generate Pedersen commitment: `result = v * g + b * h`, where `g` and `h` are ec curve points, `v` is the value being comitted to and `b` is the blinding factor    
 * Method: `POST`  
