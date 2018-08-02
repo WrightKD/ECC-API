@@ -369,7 +369,7 @@ func TestAddGivesCorrectResult(t *testing.T) {
   }
 }
 
-func TestSubGivesCorrectResult(t *testing.T) {
+func TestSubModGivesCorrectResult(t *testing.T) {
   a, _ := new(big.Int).SetString("20222222222222222222222222222222222222222222222222222222222222222222222222222", 10)
   b, _ := new(big.Int).SetString("11111111111111111111111111111111111111111111111111111111111111111111111111111", 10)
   c, _ := new(big.Int).SetString("21888242871839275222246405745257275088548364400416034343698204186575808495617", 10)
@@ -470,6 +470,41 @@ func TestModGivesCorrectResult(t *testing.T) {
   number := res.Num
   ansAPI, _ := new(big.Int).SetString(number.V[2:], 16)
   ans := new(big.Int).Mod(a, b)
+  if(ans.Cmp(ansAPI) != 0) {
+    t.Errorf("Wrong answer returned")
+    return
+  }
+}
+
+func TestInvModGivesCorrectResult(t *testing.T) {
+  a, _ := new(big.Int).SetString("20222222222222222222222222222222222222222222222222222222222222222222222222222", 10)
+  b, _ := new(big.Int).SetString("11111111111111111111111111111111111111111111111111111111111111111111111111111", 10)
+  binaryOpParams := BinaryOpParams{A: fmt.Sprintf("0x%x", a), B: fmt.Sprintf("0x%x", b)}
+  marshalledJSON, _ := json.Marshal(binaryOpParams)
+  response, err := http.Post("http://localhost:" + port + "/big/invmod/", "application/json", bytes.NewBuffer(marshalledJSON))
+  if err != nil {
+    t.Errorf("An error occurred while making request to API: %s\n", err)
+    return
+  }
+  defer response.Body.Close()
+  contents, err := ioutil.ReadAll(response.Body)
+  if err != nil {
+    t.Errorf("An error occurred while reading response body: %s\n", err)
+    return
+  }
+  var res Response
+  err = json.Unmarshal(contents, &res)
+  if err != nil {
+    t.Errorf("An error occurred while reading into JSON object: %s\n", err)
+    return
+  }
+  if res.Err != nil && res.Err.Msg != "" {
+    t.Errorf(fmt.Sprintf("An error occurred: %s\n", res.Err.Msg))
+    return
+  }
+  number := res.Num
+  ansAPI, _ := new(big.Int).SetString(number.V[2:], 16)
+  ans := new(big.Int).ModInverse(a, b)
   if(ans.Cmp(ansAPI) != 0) {
     t.Errorf("Wrong answer returned")
     return
