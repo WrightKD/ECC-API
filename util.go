@@ -100,11 +100,13 @@ func GenerateSchnorrSignature(M string, X *big.Int, err error) (*bn256.G1, *bn25
     return nil, nil, "", nil, nil, err
   } else {
     P := new(bn256.G1).ScalarBaseMult(X)
+    P_point := NewCurvePoint(P)
     k, _ := rand.Int(rand.Reader, bn256.Order)
     kG := new(bn256.G1).ScalarBaseMult(k)
+    kG_point := NewCurvePoint(kG)
     h := sha3.NewKeccak256()
     h.Reset()
-    h.Write([]byte(fmt.Sprintf("%s%s%s", M, P, kG)))
+    h.Write([]byte(fmt.Sprintf("%s%s%s%s%s", M, P_point.X, P_point.Y, kG_point.X, kG_point.Y)))
     e, _ := new(big.Int).SetString(fmt.Sprintf("%x", h.Sum(nil)), 16)
     s := new(big.Int).Mod(new(big.Int).Add(k, new(big.Int).Mul(e, X)), bn256.Order)
     return P, kG, M, e, s, nil
@@ -115,12 +117,14 @@ func VerifySchnorrSignature(P *bn256.G1, M string, E, S *big.Int, err error) (bo
   if err != nil {
     return false, err
   } else {
+    P_point := NewCurvePoint(P)
     sG := new(bn256.G1).ScalarBaseMult(S)
     eP := new(bn256.G1).ScalarMult(P, E)
     kG := new(bn256.G1).Add(sG, eP.Neg(eP))
+    kG_point := NewCurvePoint(kG)
     h := sha3.NewKeccak256()
     h.Reset()
-    h.Write([]byte(fmt.Sprintf("%s%s%s", M, P, kG)))
+    h.Write([]byte(fmt.Sprintf("%s%s%s%s%s", M, P_point.X, P_point.Y, kG_point.X, kG_point.Y)))
     e, _ := new(big.Int).SetString(fmt.Sprintf("%x", h.Sum(nil)), 16)
     return (e.Cmp(E) == 0), nil
   }
