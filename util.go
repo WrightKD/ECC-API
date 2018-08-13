@@ -95,9 +95,9 @@ func NewECPoint(xCoord string, yCoord string, err error) (*bn256.G1, error) {
   }
 }
 
-func GenerateSchnorrSignature(P *bn256.G1, M string, X *big.Int, err error) (*bn256.G1, string, *big.Int, *big.Int, error) {
+func GenerateSchnorrSignature(P *bn256.G1, M string, X *big.Int, err error) (*bn256.G1, *bn256.G1, string, *big.Int, *big.Int, error) {
   if err != nil {
-    return nil, "", nil, nil, err
+    return nil, nil, "", nil, nil, err
   } else {
     k, _ := rand.Int(rand.Reader, bn256.Order)
     kG := new(bn256.G1).ScalarBaseMult(k)
@@ -106,7 +106,7 @@ func GenerateSchnorrSignature(P *bn256.G1, M string, X *big.Int, err error) (*bn
     h.Write([]byte(fmt.Sprintf("%s%s%s", M, P, kG)))
     e, _ := new(big.Int).SetString(fmt.Sprintf("%x", h.Sum(nil)), 16)
     s := new(big.Int).Mod(new(big.Int).Add(k, new(big.Int).Mul(e, X)), bn256.Order)
-    return P, M, e, s, nil
+    return P, kG, M, e, s, nil
   }
 }
 

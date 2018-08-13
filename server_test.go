@@ -388,7 +388,7 @@ func TestVerifySchnorr(t *testing.T) {
   x, _ := rand.Int(rand.Reader, bn256.Order)
   P := new(bn256.G1).ScalarBaseMult(x)
   m := "This is the message to be signed"
-  P_out, M_out, E_out, S_out, err := GenerateSchnorrSignature(P, m, x, nil)
+  P_out, _, M_out, E_out, S_out, err := GenerateSchnorrSignature(P, m, x, nil)
   schnorrSignature := SchnorrSignature{P: NewCurvePoint(P_out), M: M_out, E: fmt.Sprintf("0x%064x", E_out), S: fmt.Sprintf("0x%064x", S_out)}
   marshalledJSON, _ := json.Marshal(schnorrSignature)
   response, err := http.Post("http://localhost:" + port + "/verify/schnorr/", "application/json", bytes.NewBuffer(marshalledJSON))
