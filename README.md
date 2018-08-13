@@ -21,6 +21,7 @@ These are the available routes:
 * [`/ec/order`](#ecorder)
 * [`/ec/add/`](#ecadd)
 * [`/ec/sub/`](#ecsub)
+* [`/ec/mul/`](#ecmul)
 * [`/ec/basemul/`](#ecbasemul)
 * [`/ec/hashtopoint/`](#echashtopoint)
 * [`/big/add/`](#bigadd)
