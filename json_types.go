@@ -7,10 +7,11 @@ import (
 )
 
 type Response struct {
-  Text  string          `json:"text,omitempty"`
-  Num   *Number         `json:"number,omitempty"`
-  P     *CurvePoint     `json:"curvepoint,omitempty"`
-  Err   *Error          `json:"error,omitempty"`
+  Text  string              `json:"text,omitempty"`
+  Num   *Number             `json:"number,omitempty"`
+  P     *CurvePoint         `json:"curvepoint,omitempty"`
+  Sig   *SchnorrSignature   `json:"sig,omitempty"`
+  Err   *Error              `json:"error,omitempty"`
 }
 
 type Text struct {
@@ -55,6 +56,20 @@ type CommitmentInputs struct {
   V   string        `json:"v"`
   H   *CurvePoint   `json:"h"`
   G   *CurvePoint   `json:"g"`
+}
+
+type GenerateSchnorrInputs struct {
+  P   *CurvePoint   `json:"p"`
+  M   string        `json:"m"`
+  X   string        `json:"x"`
+}
+
+type SchnorrSignature struct {
+  P   *CurvePoint   `json:"p"`
+  K   *CurvePoint   `json:"kg,omitempty"`
+  M   string        `json:"m"`
+  E   string        `json:"e"`
+  S   string        `json:"s"`
 }
 
 type Number struct {

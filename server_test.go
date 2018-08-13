@@ -2,6 +2,7 @@ package main
 
 import (
   "testing"
+  "crypto/rand"
   "net/http"
   "io/ioutil"
   "encoding/json"
@@ -331,6 +332,88 @@ func TestGenerateCommitment(t *testing.T) {
   Ct := bbHH.Add(bbHH, vvGG)
   if (C.String() != Ct.String()) {
     t.Errorf("Invalid commitment returned\n")
+  }
+}
+
+func TestGenerateSchnorr(t *testing.T) {
+  x, _ := rand.Int(rand.Reader, bn256.Order)
+  P := new(bn256.G1).ScalarBaseMult(x)
+  m := "This is the message to be signed"
+  generateSchnorrInputs := GenerateSchnorrInputs{P: NewCurvePoint(P), X: fmt.Sprintf("0x%064x", x), M: m}
+  marshalledJSON, _ := json.Marshal(generateSchnorrInputs)
+  response, err := http.Post("http://localhost:" + port + "/generate/schnorr/", "application/json", bytes.NewBuffer(marshalledJSON))
+  if err != nil {
+    t.Errorf("An error occurred while making request to API: %s\n", err)
+    return
+  }
+  defer response.Body.Close()
+  contents, err := ioutil.ReadAll(response.Body)
+  if err != nil {
+    t.Errorf("An error occurred while reading response body: %s\n", err)
+    return
+  }
+  var res Response
+  err = json.Unmarshal(contents, &res)
+  if err != nil {
+    t.Errorf("An error occurred while reading into JSON object: %s\n", err)
+    return
+  }
+  if res.Err != nil && res.Err.Msg != "" {
+    t.Errorf(fmt.Sprintf("An error occurred: %s\n", res.Err.Msg))
+    return
+  }
+  sig := res.Sig
+  P_out := new(bn256.G1)
+  marshalledPoint := sig.P.X[2:] + sig.P.Y[2:]
+  marshalledBytes, err := hex.DecodeString(marshalledPoint)
+  if err != nil {
+    t.Errorf("An error occurred while decoding hex string: %s\n", err)
+    return
+  }
+  _, err = P_out.Unmarshal(marshalledBytes)
+  if err != nil {
+    t.Errorf("An error occurred while unmarshalling BN256 curve point: %s\n", err)
+    return
+  }
+  E_out, _ := new(big.Int).SetString(sig.E[2:], 16)
+  S_out, _ := new(big.Int).SetString(sig.S[2:], 16)
+  M_out := sig.M
+  isValid, err := VerifySchnorrSignature(P_out, M_out, E_out, S_out, err)
+  if (!isValid) {
+    t.Errorf("Invalid Schnorr signature generated")
+  }
+}
+
+func TestVerifySchnorr(t *testing.T) {
+  x, _ := rand.Int(rand.Reader, bn256.Order)
+  P := new(bn256.G1).ScalarBaseMult(x)
+  m := "This is the message to be signed"
+  P_out, M_out, E_out, S_out, err := GenerateSchnorrSignature(P, m, x, nil)
+  schnorrSignature := SchnorrSignature{P: NewCurvePoint(P_out), M: M_out, E: fmt.Sprintf("0x%064x", E_out), S: fmt.Sprintf("0x%064x", S_out)}
+  marshalledJSON, _ := json.Marshal(schnorrSignature)
+  response, err := http.Post("http://localhost:" + port + "/verify/schnorr/", "application/json", bytes.NewBuffer(marshalledJSON))
+  if err != nil {
+    t.Errorf("An error occurred while making request to API: %s\n", err)
+    return
+  }
+  defer response.Body.Close()
+  contents, err := ioutil.ReadAll(response.Body)
+  if err != nil {
+    t.Errorf("An error occurred while reading response body: %s\n", err)
+    return
+  }
+  var res Response
+  err = json.Unmarshal(contents, &res)
+  if err != nil {
+    t.Errorf("An error occurred while reading into JSON object: %s\n", err)
+    return
+  }
+  if res.Err != nil && res.Err.Msg != "" {
+    t.Errorf(fmt.Sprintf("An error occurred: %s\n", res.Err.Msg))
+    return
+  }
+  if (res.Text != "true") {
+    t.Errorf("Invalid Schnorr signature generated")
   }
 }
 

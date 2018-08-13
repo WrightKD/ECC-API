@@ -50,3 +50,18 @@ func GenerateCommitment(w http.ResponseWriter, r *http.Request) {
   commitment := NewCurvePoint(C)
   encoder.Encode(Response{P: commitment})
 }
+
+func GenerateSchnorr(w http.ResponseWriter, r *http.Request) {
+  encoder := json.NewEncoder(w)
+  var generateSchnorrInputs GenerateSchnorrInputs
+  err := ReadContentsIntoStruct(r, &generateSchnorrInputs)
+  if err != nil {
+    encoder.Encode(Response{Err: &Error{Msg: err.Error()}})
+    return
+  }
+  P, err := NewECPoint(generateSchnorrInputs.P.X, generateSchnorrInputs.P.Y, err)
+  X, err := NewBigInt(generateSchnorrInputs.X, err)
+  M := generateSchnorrInputs.M
+  P_out, M_out, E_out, S_out, _ := GenerateSchnorrSignature(P, M, X, err)
+  encoder.Encode(Response{Sig: &SchnorrSignature{P: NewCurvePoint(P_out), M: M_out, E: fmt.Sprintf("0x%064x", E_out), S: fmt.Sprintf("0x%064x", S_out)}})
+}

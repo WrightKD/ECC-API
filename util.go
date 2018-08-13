@@ -2,6 +2,7 @@ package main
 
 import (
   "errors"
+  "crypto/rand"
   "net/http"
   "encoding/json"
   "io/ioutil"
@@ -9,6 +10,7 @@ import (
   "github.com/rynobey/bn256"
   "encoding/hex"
   "fmt"
+  "github.com/ethereum/go-ethereum/crypto/sha3"
 )
 
 func Hex32ByteChunksToStr(hexChunks []string) (string) {
@@ -90,5 +92,35 @@ func NewECPoint(xCoord string, yCoord string, err error) (*bn256.G1, error) {
       return nil, err
     }
     return P, nil
+  }
+}
+
+func GenerateSchnorrSignature(P *bn256.G1, M string, X *big.Int, err error) (*bn256.G1, string, *big.Int, *big.Int, error) {
+  if err != nil {
+    return nil, "", nil, nil, err
+  } else {
+    k, _ := rand.Int(rand.Reader, bn256.Order)
+    kG := new(bn256.G1).ScalarBaseMult(k)
+    h := sha3.NewKeccak256()
+    h.Reset()
+    h.Write([]byte(fmt.Sprintf("%s%s%s", M, P, kG)))
+    e, _ := new(big.Int).SetString(fmt.Sprintf("%x", h.Sum(nil)), 16)
+    s := new(big.Int).Mod(new(big.Int).Add(k, new(big.Int).Mul(e, X)), bn256.Order)
+    return P, M, e, s, nil
+  }
+}
+
+func VerifySchnorrSignature(P *bn256.G1, M string, E, S *big.Int, err error) (bool, error) {
+  if err != nil {
+    return false, err
+  } else {
+    sG := new(bn256.G1).ScalarBaseMult(S)
+    eP := new(bn256.G1).ScalarMult(P, E)
+    kG := new(bn256.G1).Add(sG, eP.Neg(eP))
+    h := sha3.NewKeccak256()
+    h.Reset()
+    h.Write([]byte(fmt.Sprintf("%s%s%s", M, P, kG)))
+    e, _ := new(big.Int).SetString(fmt.Sprintf("%x", h.Sum(nil)), 16)
+    return (e.Cmp(E) == 0), nil
   }
 }
