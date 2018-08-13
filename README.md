@@ -82,7 +82,7 @@ These are the available routes:
 #### `/generate/keccak256/`
 * Description: Generate hash of input text: `result = Hash(text)`  
 * Method: `POST`  
-*	Input: JSON object containing an input string to the hash function: For ex. `{"t":"Input to hash function"}`
+* Input: JSON object containing an input string to the hash function: For ex. `{"t":"Input to hash function"}`
 * Output: JSON object containing the resulting hash in hex: For ex. 
 	```json
 	{
@@ -97,10 +97,67 @@ These are the available routes:
 	```
 
 #### `/generate/schnorr/`
-TODO
+* Description: Generate a Schnorr signature using the provided private key. Warning: Be very careful with your "real" private keys!
+* Method: `POST`  
+* Input: JSON object containing a private key, priv, and the message to sign, m: For ex. `{"priv":"0x010644e7fe131b029b85045b48181885d978163916871cffd3c208c16d87cfd3", "m":"This is the message to sign"}`
+* Output: JSON object containing the resulting signature: For ex. 
+	```json
+	{
+	  "sig":{
+	    "p":{
+	      "x":"0x2801e79eac4b6bbfe4a6143036c14267d93edde4adb2702ca8f8b4bd6a08a716",
+	      "y":"0x093d91ebc4eccd316d28e0da5009e5d9cc9b506d8d74494d9b12ddf862d980b1"
+	    },
+	    "kg":{
+	      "x":"0x1de8363a95400b259cadfd94484a51d7c9138aab207cec3979d9ce8e3a35dc5f",
+	      "y":"0x2efe815342a3d66c24dae661f43ee7b5dc4d77c76ecd6960c9b76482f93d4079"
+	    },
+	    "m":"This is the message to sign",
+	    "e":"0xce4969346a79d7b238f6c5d32d2f9b04bb4f8b61c72be4b33bce4c54afde2f99",
+	    "s":"0x1fcf45dbb5f9095cb26f07add3b81ec5287d8318546ceeba2f5763073a8d9005"
+	  }
+	}
+	```
+* Example usage: 
+	```
+	curl --header "Content-Type: application/json" --request POST --data '{"priv":"0x010644e7fe131b029b85045b48181885d978163916871cffd3c208c16d87cfd3", "m":"This is the message to sign"}' http://localhost:8083/generate/schnorr/
+	```
 
 #### `/verify/schnorr/`
-TODO
+* Description: Verify a Schnorr signature.
+* Method: `POST`  
+* Input: JSON object containing the signature: For ex. 
+	```json
+	{
+	  "p":{
+	    "x":"0x2801e79eac4b6bbfe4a6143036c14267d93edde4adb2702ca8f8b4bd6a08a716",
+	    "y":"0x093d91ebc4eccd316d28e0da5009e5d9cc9b506d8d74494d9b12ddf862d980b1"
+	  },
+	  "kg":{
+	    "x":"0x1de8363a95400b259cadfd94484a51d7c9138aab207cec3979d9ce8e3a35dc5f",
+	    "y":"0x2efe815342a3d66c24dae661f43ee7b5dc4d77c76ecd6960c9b76482f93d4079"
+	  },
+	  "m":"This is the message to sign",
+	  "e":"0xce4969346a79d7b238f6c5d32d2f9b04bb4f8b61c72be4b33bce4c54afde2f99",
+	  "s":"0x1fcf45dbb5f9095cb26f07add3b81ec5287d8318546ceeba2f5763073a8d9005"
+	}
+	```
+* Output: JSON object containing the result of the verification: For ex. 
+	```json
+	{
+	  "text":"true"
+	}
+	```
+	or, for an invalid signature:
+	```json
+	{
+	  "text":"false"
+	}
+	```
+* Example usage: 
+	```
+	curl --header "Content-Type: application/json" --request POST --data '{"p":{"x":"0x2801e79eac4b6bbfe4a6143036c14267d93edde4adb2702ca8f8b4bd6a08a716","y":"0x093d91ebc4eccd316d28e0da5009e5d9cc9b506d8d74494d9b12ddf862d980b1"},"kg":{"x":"0x1de8363a95400b259cadfd94484a51d7c9138aab207cec3979d9ce8e3a35dc5f","y":"0x2efe815342a3d66c24dae661f43ee7b5dc4d77c76ecd6960c9b76482f93d4079"},"m":"This is the message to sign","e":"0xce4969346a79d7b238f6c5d32d2f9b04bb4f8b61c72be4b33bce4c54afde2f99","s":"0x1fcf45dbb5f9095cb26f07add3b81ec5287d8318546ceeba2f5763073a8d9005"}' http://localhost:8083/verify/schnorr/
+	```
 
 ### Routes for math using elliptic curve points
 #### `/ec/order`  
