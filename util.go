@@ -95,10 +95,11 @@ func NewECPoint(xCoord string, yCoord string, err error) (*bn256.G1, error) {
   }
 }
 
-func GenerateSchnorrSignature(P *bn256.G1, M string, X *big.Int, err error) (*bn256.G1, *bn256.G1, string, *big.Int, *big.Int, error) {
+func GenerateSchnorrSignature(M string, X *big.Int, err error) (*bn256.G1, *bn256.G1, string, *big.Int, *big.Int, error) {
   if err != nil {
     return nil, nil, "", nil, nil, err
   } else {
+    P := new(bn256.G1).ScalarBaseMult(X)
     k, _ := rand.Int(rand.Reader, bn256.Order)
     kG := new(bn256.G1).ScalarBaseMult(k)
     h := sha3.NewKeccak256()

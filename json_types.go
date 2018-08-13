@@ -59,9 +59,8 @@ type CommitmentInputs struct {
 }
 
 type GenerateSchnorrInputs struct {
-  P   *CurvePoint   `json:"p"`
-  M   string        `json:"m"`
-  X   string        `json:"x"`
+  Priv    string        `json:"priv"`
+  M       string        `json:"m"`
 }
 
 type SchnorrSignature struct {
