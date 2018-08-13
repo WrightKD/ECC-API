@@ -22,6 +22,7 @@ func main() {
   router.HandleFunc("/big/invmod/", BigIntInvMod).Methods("POST")
   router.HandleFunc("/big/mul/", BigIntMul).Methods("POST")
   router.HandleFunc("/big/mod/", BigIntMod).Methods("POST")
+  router.HandleFunc("/big/rand", CryptoRandBigInt).Methods("GET")
   router.HandleFunc("/ec/order", ECOrder)
   router.HandleFunc("/ec/add/", ECAdd).Methods("POST")
   router.HandleFunc("/ec/sub/", ECSub).Methods("POST")
