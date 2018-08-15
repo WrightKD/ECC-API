@@ -2,7 +2,19 @@
 A lightweight API with endpoints for doing operations using the bn256 elliptic curve.
 
 ## Installation
-1. Install go 1.10+.
+1. Install go 1.10+:
+```
+wget https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz
+tar -xf go1.10.3.linux-amd64.tar.gz
+sudo cp -r go/ /usr/local/
+rm -rf go/ go1.10.3.linux-amd64.tar.gz
+echo "export GOROOT=/usr/local/go" >> ~/.bashrc
+echo "export GOPATH=$HOME/projects/go" >> ~/.bashrc
+echo "PATH=\$PATH:/usr/local/go/bin" >> ~/.bashrc
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/projects/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+```
 2. Make sure your `GOPATH` environment variable is pointing to an appropriate location
 3. Get the repo along with its dependencies: `go get -d -u github.com/rynobey/ECC-API`
 4. Compile by browsing to `$GOPATH/src/github.com/rynobey/ECC-API` and running `go build`
