@@ -2,7 +2,7 @@
 A lightweight API with endpoints for doing operations using the bn256 elliptic curve.
 
 ## Installation
-1. Install go 1.10+:
+1. Install go 1.10+ (Ubuntu):
 ```
 wget https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz
 tar -xf go1.10.3.linux-amd64.tar.gz
