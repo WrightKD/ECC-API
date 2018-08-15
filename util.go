@@ -62,10 +62,20 @@ func ReadContentsIntoStruct(r *http.Request, obj interface{}) (error) {
   return nil
 }
 
+func AddPrefixIfMissing(num string) (string) {
+  var newNum string
+  if len(num) < 3 || num[0:2] != "0x" {
+    newNum = fmt.Sprintf("0x%s", num)
+    return newNum
+  }
+  return num
+}
+
 func NewBigInt(num string, err error) (*big.Int, error) {
   if err != nil {
     return nil, err
   } else {
+    num = AddPrefixIfMissing(num)
     if len(num) < 3 {
       return nil, errors.New("Unable to initialize big.Int from string: too short")
     }
@@ -82,6 +92,8 @@ func NewECPoint(xCoord string, yCoord string, err error) (*bn256.G1, error) {
     return nil, err
   } else {
     P := new(bn256.G1)
+    xCoord = AddPrefixIfMissing(xCoord)
+    yCoord = AddPrefixIfMissing(yCoord)
     marshalledPoint := fmt.Sprintf("%064s%064s", xCoord[2:], yCoord[2:])
     marshalledBytes, err := hex.DecodeString(marshalledPoint)
     if err != nil {
