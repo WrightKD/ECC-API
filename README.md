@@ -19,6 +19,14 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 3. Get the repo along with its dependencies: `go get -d -u github.com/rynobey/ECC-API`
 4. Compile by browsing to `$GOPATH/src/github.com/rynobey/ECC-API` and running `go build`
 
+## Examples of how to interact with this API in different languages
+Here are some examples of how you could interact with a subset of the available routes of this API:
+1. Node.js: https://github.com/coeniebeyers/nodeEcApi
+2. Python 2 & 3: https://github.com/coeniebeyers/pythonEcApi
+3. Java: https://github.com/coeniebeyers/javaEcApi
+
+One could also interact with all of these routes by doing syscalls using, for example, the curl examples shown below for each route.
+
 ## Running and testing
 1. Start the API server by browsing to `$GOPATH/src/github.com/rynobey/ECC-API` and running `./ECC-API`. The server runs on port 8083.
 2. Once the API server is started, test it by running `GOCACHE=off go test -v .` (while in `$GOPATH/src/github.com/rynobey/ECC-API`)
@@ -59,7 +67,7 @@ These are the available routes:
 
 
 ### Routes for cryptographic algorithms
-#### `/generate/commitment`
+#### `/generate/commitment/`
 * Description: Generate Pedersen commitment: `result = v * g + b * h`, where `g` and `h` are ec curve points, `v` is the value being comitted to and `b` is the blinding factor    
 * Method: `POST`  
 * Input: JSON object containing two integers, b and v, and two curve points, h and g, in hex: For ex. 
